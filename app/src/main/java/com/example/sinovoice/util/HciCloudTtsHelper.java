@@ -31,9 +31,14 @@ public class HciCloudTtsHelper {
         return mHciCloudTtsHelper;
     }
 
-    public void initTtsPlayer(Context context, String capkey){
+    /**
+     * 播放器初始化
+     * @param context   上下文
+     * @param initCapkeys   需要初始化的capkey，可以设置为多个，中间以；间隔
+     */
+    public void initTtsPlayer(Context context, String initCapkeys){
         mTtsPlayer = new TTSPlayer();
-        String strConfig = getTtsInitParam(context, capkey);
+        String strConfig = getTtsInitParam(context, initCapkeys);
         mTtsPlayer.init(strConfig, new TTSEventProcess());
         Log.d(TAG, "initTtsPlayer Success.");
     }
@@ -42,6 +47,7 @@ public class HciCloudTtsHelper {
      * 开始播放
      * @param text  需要播放的文本
      * @param capkey    发音人选择
+     * @param property  私有云配置，公有云可以忽略此配置
      */
     public void playTtsPlayer(String text, String capkey, String property) {
         String strConfig = getTtsSynthConfig(capkey, property);
@@ -84,6 +90,7 @@ public class HciCloudTtsHelper {
     /**
      * 合成配置参数
      * @param capkey    发音人选择
+     * @param property  私有云配置，主要是音库的配置参数
      * @return
      */
     private String getTtsSynthConfig(String capkey, String property) {

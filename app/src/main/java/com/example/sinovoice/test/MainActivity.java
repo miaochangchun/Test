@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HciCloudSysHelper myHciCloudSysHelper;
     private HciCloudAsrHelper myHciCloudAsrHelper;
     private HciCloudTtsHelper myHciCloudTtsHelper;
-    private String ttsCapkey = "tts.cloud.synth";
-    private String asrCapkey = "asr.cloud.freetalk";
+    private String cnTtsCapkey = "tts.cloud.wangjing";
+    private String uyTtsCapkey = "tts.cloud.uyghur";
+    private String cnAsrCapkey= "asr.cloud.freetalk";
+    private String uyAsrCapkey = "asr.cloud.freetalk.uyghur";
 
     private class MyHandler extends Handler{
         @Override
@@ -62,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "系统初始化失败，错误码=" + errorCode, Toast.LENGTH_SHORT).show();
             return;
         }
-        myHciCloudAsrHelper.initAsrRecorder(this, asrCapkey);
+        myHciCloudAsrHelper.initAsrRecorder(this, cnAsrCapkey + ";" + uyAsrCapkey);
         myHciCloudAsrHelper.setMyHander(new MyHandler());
 
-        myHciCloudTtsHelper.initTtsPlayer(this, ttsCapkey);
+        myHciCloudTtsHelper.initTtsPlayer(this, cnTtsCapkey + ";" + uyTtsCapkey);
     }
 
     /**
@@ -89,16 +91,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cn_play:
-                myHciCloudTtsHelper.playTtsPlayer("123456", ttsCapkey, "cn_wangjing_common");
+                myHciCloudTtsHelper.playTtsPlayer("123456", cnTtsCapkey, "");
                 break;
             case R.id.uy_play:
-                myHciCloudTtsHelper.playTtsPlayer("123456", ttsCapkey, "uyghur_uyghur_commom");
+                myHciCloudTtsHelper.playTtsPlayer("123456", uyTtsCapkey, "");
                 break;
             case R.id.cn_recorder:
-                myHciCloudAsrHelper.startAsrRecorder("asr.cloud.freetalk", "common");
+                myHciCloudAsrHelper.startAsrRecorder(cnAsrCapkey, "common");
                 break;
             case R.id.uy_recorder:
-                myHciCloudAsrHelper.startAsrRecorder("asr.cloud.freetalk", "music");
+                myHciCloudAsrHelper.startAsrRecorder(uyAsrCapkey, "common");
                 break;
             default:
                 break;

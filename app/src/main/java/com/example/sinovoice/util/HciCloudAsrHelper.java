@@ -50,25 +50,28 @@ public class HciCloudAsrHelper {
 
     /**
      * 录音机初始化
-     * @param context
+     * @param context   上下文
+     * @param initCapkeys    初始化录音机时设置的capkey，可以设置为多个。
+     *
      */
-    public void initAsrRecorder(Context context, String capkey) {
+    public void initAsrRecorder(Context context, String initCapkeys) {
         mASRRecorder = new ASRRecorder();
-        String strConfig = getAsrInitParam(context, capkey);
+        String strConfig = getAsrInitParam(context, initCapkeys);
         // 语法相关的配置,若使用自由说能力可以不必配置该项
         String grammarData = "";
-        String grammarConfigString = "capkey=" + capkey + ",isFile=no,grammarType=jsgf";
+        String grammarConfigString = "capkey=" + initCapkeys + ",isFile=no,grammarType=jsgf";
         mASRRecorder.init(strConfig, grammarConfigString, grammarData, new ASRRecorderCallback());
     }
 
     /**
      * 获取初始化时的参数配置
-     * @param context
+     * @param context   上下文
+     * @param initCapkeys   需要初始化的capkey，可以设置为多个
      * @return
      */
-    private String getAsrInitParam(Context context, String capkey) {
+    private String getAsrInitParam(Context context, String initCapkeys) {
         AsrInitParam asrInitParam = new AsrInitParam();
-        asrInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, capkey);
+        asrInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, initCapkeys);
         asrInitParam.addParam(AsrInitParam.PARAM_KEY_FILE_FLAG, "android_so");
         String dataPath = context.getFilesDir().getAbsolutePath().replace("files", "lib");
         asrInitParam.addParam(AsrInitParam.PARAM_KEY_DATA_PATH, dataPath);
@@ -76,7 +79,9 @@ public class HciCloudAsrHelper {
     }
 
     /**
-     * 开启语音识别功能
+     * 开启录音机识别
+     * @param capkey    开启录音机时使用的capkey
+     * @param domain    设置识别的领域
      */
     public void startAsrRecorder(String capkey, String domain) {
         if (mASRRecorder.getRecorderState() == ASRRecorder.RECORDER_STATE_IDLE) {
@@ -87,6 +92,8 @@ public class HciCloudAsrHelper {
 
     /**
      * 获取asr识别时的配置参数
+     * @param capkey    录音机识别是的配置参数capkey
+     * @param domain    设置的领域值
      * @return
      */
     private String getAsrConfigParam(String capkey, String domain) {
