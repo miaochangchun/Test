@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="6dip">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cn_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中文识别"/>
+        <Button
+            android:id="@+id/uy_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="维语识别"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/result_uy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="识别结果："/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cn_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放中文"/>
+        <TextView
+            android:id="@+id/text_cn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="46px"
+            android:text="123456"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/uy_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放维语"/>
+        <TextView
+            android:id="@+id/text_uy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="46px"
+            android:text="123456"/>
+    </LinearLayout>
+</LinearLayout>
