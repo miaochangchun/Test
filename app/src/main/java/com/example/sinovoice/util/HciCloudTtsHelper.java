@@ -40,6 +40,8 @@ public class HciCloudTtsHelper {
         mTtsPlayer = new TTSPlayer();
         String strConfig = getTtsInitParam(context, initCapkeys);
         mTtsPlayer.init(strConfig, new TTSEventProcess());
+        //设置使用AudioFocus机制
+        mTtsPlayer.setContext(context);
         Log.d(TAG, "initTtsPlayer Success.");
     }
 
@@ -50,7 +52,13 @@ public class HciCloudTtsHelper {
      * @param property  私有云配置，公有云可以忽略此配置
      */
     public void playTtsPlayer(String text, String capkey, String property) {
-        String strConfig = getTtsSynthConfig(capkey, property);
+        String strConfig = null;
+        if("tts.cloud.synth".equals(capkey)){
+            strConfig = getTtsSynthConfig(capkey, property);
+        }else {
+            strConfig = getTtsSynthConfig(capkey);
+        }
+
         Log.d(TAG, "mTtsPlayer = " + mTtsPlayer);
         if (mTtsPlayer.getPlayerState() == TTSCommonPlayer.PLAYER_STATE_PLAYING || mTtsPlayer.getPlayerState() == TTSCommonPlayer.PLAYER_STATE_PAUSE) {
             mTtsPlayer.stop();
@@ -99,6 +107,20 @@ public class HciCloudTtsHelper {
         ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_AUDIO_FORMAT, "pcm16k16bit");
         ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_SPEED, "5");
         ttsConfig.addParam(TtsConfig.PrivateCloudConfig.PARAM_KEY_PROPERTY, property);
+        ttsConfig.addParam(TtsConfig.EncodeConfig.PARAM_KEY_ENCODE, "speex");
+        return  ttsConfig.getStringConfig();
+    }
+
+    /**
+     * 公有云配置参数
+     * @param capkey
+     * @return
+     */
+    private String getTtsSynthConfig(String capkey) {
+        TtsConfig ttsConfig = new TtsConfig();
+        ttsConfig.addParam(TtsConfig.SessionConfig.PARAM_KEY_CAP_KEY, capkey);
+        ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_AUDIO_FORMAT, "pcm16k16bit");
+        ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_SPEED, "5");
         ttsConfig.addParam(TtsConfig.EncodeConfig.PARAM_KEY_ENCODE, "speex");
         return  ttsConfig.getStringConfig();
     }
