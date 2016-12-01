@@ -20,15 +20,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button uyRecorder;
     private Button cnPlay;
     private Button uyPlay;
-    private TextView cnResult;
+//    private TextView cnResult;
     private TextView uyResult;
     private HciCloudSysHelper myHciCloudSysHelper;
     private HciCloudAsrHelper myHciCloudAsrHelper;
     private HciCloudTtsHelper myHciCloudTtsHelper;
+    //公有云配置参数
     private String cnTtsCapkey = "tts.cloud.wangjing";
     private String uyTtsCapkey = "tts.cloud.uyghur";
     private String cnAsrCapkey= "asr.cloud.freetalk";
     private String uyAsrCapkey = "asr.cloud.freetalk.uyghur";
+
+    /**
+     * 私有云配置参数
+     */
+//    private String ttsCapkey = "tts.cloud.synth";
+//    private String asrCapkey= "asr.cloud.freetalk";
 
     private class MyHandler extends Handler{
         @Override
@@ -64,9 +71,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "系统初始化失败，错误码=" + errorCode, Toast.LENGTH_SHORT).show();
             return;
         }
+        //私有云配置
+        //myHciCloudAsrHelper.initAsrRecorder(this, asrCapkey);
+        //公有云配置
         myHciCloudAsrHelper.initAsrRecorder(this, cnAsrCapkey + ";" + uyAsrCapkey);
+
         myHciCloudAsrHelper.setMyHander(new MyHandler());
 
+        //私有云配置参数
+        //myHciCloudTtsHelper.initTtsPlayer(this, ttsCapkey);
+        //公有云配置参数
         myHciCloudTtsHelper.initTtsPlayer(this, cnTtsCapkey + ";" + uyTtsCapkey);
     }
 
@@ -90,16 +104,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cn_play:
+            case R.id.cn_play:  //中文语音合成
+                //私有云配置
+                //myHciCloudTtsHelper.playTtsPlayer("123456", ttsCapkey, "cn_wangjing_common");
+                //公有云配置
                 myHciCloudTtsHelper.playTtsPlayer("123456", cnTtsCapkey, "");
                 break;
-            case R.id.uy_play:
+            case R.id.uy_play:  //维语语音合成
+                //私有云配置
+//                myHciCloudTtsHelper.playTtsPlayer("123456", ttsCapkey, "uyghur_uyghur_common");
+                //公有云配置
                 myHciCloudTtsHelper.playTtsPlayer("123456", uyTtsCapkey, "");
                 break;
-            case R.id.cn_recorder:
+            case R.id.cn_recorder:  //中文语音识别
+                //私有云配置
+                //myHciCloudAsrHelper.startAsrRecorder(asrCapkey, "common");
+                //公有云配置
                 myHciCloudAsrHelper.startAsrRecorder(cnAsrCapkey, "common");
                 break;
-            case R.id.uy_recorder:
+            case R.id.uy_recorder:  //维语语音识别
+                //私有云配置
+                //myHciCloudAsrHelper.startAsrRecorder(asrCapkey, "music");
+                //公有云配置
                 myHciCloudAsrHelper.startAsrRecorder(uyAsrCapkey, "common");
                 break;
             default:
