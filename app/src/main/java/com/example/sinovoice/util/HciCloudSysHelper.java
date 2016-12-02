@@ -48,6 +48,7 @@ public class HciCloudSysHelper {
         errCode = checkAuthAndUpdateAuth();
         if (errCode != HciErrorCode.HCI_ERR_NONE) {
             Log.e(TAG, "checkAuthAndUpdateAuth Failed and return errcode = " + errCode);
+            return errCode;
         }
         return HciErrorCode.HCI_ERR_NONE;
     }
@@ -116,6 +117,7 @@ public class HciCloudSysHelper {
         }
         //日志的路径，可选，如果不传或者为空则不生成日志
         initParam.addParam(InitParam.LogParam.PARAM_KEY_LOG_FILE_PATH, logPath);
+        Log.d(TAG, "logPath = " + logPath);
         //日志大小，默认一个日志文件写多大，单位为K
         initParam.addParam(InitParam.LogParam.PARAM_KEY_LOG_FILE_SIZE, "1024");
         //日志等级，0=无，1=错误，2=警告，3=信息，4=细节，5=调试，SDK将输出小于等于logLevel的日志信息

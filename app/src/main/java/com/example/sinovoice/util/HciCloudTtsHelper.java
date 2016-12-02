@@ -36,13 +36,18 @@ public class HciCloudTtsHelper {
      * @param context   上下文
      * @param initCapkeys   需要初始化的capkey，可以设置为多个，中间以；间隔
      */
-    public void initTtsPlayer(Context context, String initCapkeys){
+    public boolean initTtsPlayer(Context context, String initCapkeys){
         mTtsPlayer = new TTSPlayer();
         String strConfig = getTtsInitParam(context, initCapkeys);
         mTtsPlayer.init(strConfig, new TTSEventProcess());
         //设置使用AudioFocus机制
         mTtsPlayer.setContext(context);
         Log.d(TAG, "initTtsPlayer Success.");
+        if (mTtsPlayer.getPlayerState() == TTSPlayer.PLAYER_STATE_IDLE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

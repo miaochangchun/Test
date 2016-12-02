@@ -74,14 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //私有云配置
         //myHciCloudAsrHelper.initAsrRecorder(this, asrCapkey);
         //公有云配置
-        myHciCloudAsrHelper.initAsrRecorder(this, cnAsrCapkey + ";" + uyAsrCapkey);
-
+        boolean bool = myHciCloudAsrHelper.initAsrRecorder(this, cnAsrCapkey + ";" + uyAsrCapkey);
+        if (bool == false) {
+            Toast.makeText(this, "ASR初始化失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
         myHciCloudAsrHelper.setMyHander(new MyHandler());
 
         //私有云配置参数
         //myHciCloudTtsHelper.initTtsPlayer(this, ttsCapkey);
         //公有云配置参数
-        myHciCloudTtsHelper.initTtsPlayer(this, cnTtsCapkey + ";" + uyTtsCapkey);
+        bool = myHciCloudTtsHelper.initTtsPlayer(this, cnTtsCapkey + ";" + uyTtsCapkey);
+        if (bool == false) {
+            Toast.makeText(this, "TTS初始化失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
     /**

@@ -54,13 +54,18 @@ public class HciCloudAsrHelper {
      * @param initCapkeys    初始化录音机时设置的capkey，可以设置为多个。
      *
      */
-    public void initAsrRecorder(Context context, String initCapkeys) {
+    public boolean initAsrRecorder(Context context, String initCapkeys) {
         mASRRecorder = new ASRRecorder();
         String strConfig = getAsrInitParam(context, initCapkeys);
         // 语法相关的配置,若使用自由说能力可以不必配置该项
-        String grammarData = "";
-        String grammarConfigString = "capkey=" + initCapkeys + ",isFile=no,grammarType=jsgf";
-        mASRRecorder.init(strConfig, grammarConfigString, grammarData, new ASRRecorderCallback());
+//        String grammarData = "";
+//        String grammarConfigString = "capkey=" + initCapkeys + ",isFile=no,grammarType=jsgf";
+        mASRRecorder.init(strConfig, new ASRRecorderCallback());
+        if (mASRRecorder.getRecorderState() == ASRRecorder.RECORDER_STATE_IDLE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -86,7 +91,7 @@ public class HciCloudAsrHelper {
     public void startAsrRecorder(String capkey, String domain) {
         if (mASRRecorder.getRecorderState() == ASRRecorder.RECORDER_STATE_IDLE) {
             String strConfig = getAsrConfigParam(capkey, domain);
-            mASRRecorder.start(strConfig);
+            mASRRecorder.start(strConfig, null);
         }
     }
 
